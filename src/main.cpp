@@ -112,7 +112,8 @@ void loop()
 
                 dma_display->fillScreen(dma_display->color565(0, 0, 0));
                 center2 = 0;
-                displayText(4, 8, "MATERIAL:", 2);
+                drawText10x14(4, 8, "MATERIAL:");
+                // displayText(4, 8, "MATERIAL:", 2);
                 value2 = received.substring(3, received.length() - 1);
                 center2 = (30 / 2) - ((value2.length() * 6) / 2);
                 displayText(122, 4, value2.c_str(), 2);
