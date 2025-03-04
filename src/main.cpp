@@ -16,7 +16,7 @@ Baut Rate (9600)
 #include <Arduino.h>
 #include <iostream>
 #include "matrixMod.h"
-
+#include "errOTA.h"
 // Konfigurasi pin
 #define R1_PIN 25
 #define G1_PIN 26
@@ -60,6 +60,7 @@ void setup()
     Serial.begin(9600);
     Serial.println("Slave Ready...");
 
+    setupOTA();
     HUB75_I2S_CFG mxconfig(PANEL_RES_X, PANEL_RES_Y, PANEL_CHAIN, _pins);
     mxconfig.clkphase = false;
     mxconfig.driver = HUB75_I2S_CFG::ICN2038S;
@@ -73,6 +74,8 @@ void setup()
 
 void loop()
 {
+    server.handleClient();
+    ElegantOTA.loop();
     if (Serial.available())
     {
         String received = Serial.readStringUntil('\n'); // Baca data dari Master
@@ -112,8 +115,8 @@ void loop()
 
                 dma_display->fillScreen(dma_display->color565(0, 0, 0));
                 center2 = 0;
-                drawText10x14(4, 8, "MATERIAL:");
-                // displayText(4, 8, "MATERIAL:", 2);
+                // drawText10x14(4, 8, "MATERIAL:");
+                displayText(4, 8, "MATERIAL:", 2);
                 value2 = received.substring(3, received.length() - 1);
                 center2 = (30 / 2) - ((value2.length() * 6) / 2);
                 displayText(122, 4, value2.c_str(), 2);
