@@ -1,0 +1,2 @@
+Penghapusan library AsyncTCP_RP2040W
+Aplod foto board slave final
